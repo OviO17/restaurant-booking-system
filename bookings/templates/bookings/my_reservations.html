@@ -1,0 +1,17 @@
+{% extends "bookings/base.html" %}
+{% block title %}My Reservations{% endblock %}
+{% block content %}
+  <h2>My Reservations</h2>
+
+  {% if reservations %}
+    <ul>
+      {% for r in reservations %}
+        <li>
+          {{ r.date }} at {{ r.time }} — {{ r.guests }} guests — {{ r.table }} — {{ r.get_status_display }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No reservations yet.</p>
+  {% endif %}
+{% endblock %}

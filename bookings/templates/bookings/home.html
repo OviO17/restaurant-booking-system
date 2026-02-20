@@ -6,7 +6,11 @@
     <title>Restaurant Booking</title>
   </head>
   <body>
-    <h1>Restaurant Booking System</h1>
-    <p>Home page working ✅</p>
+   {% extends "bookings/base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+  <h1>Restaurant Booking System</h1>
+  <p>Home page working ✅</p>
+{% endblock %}
   </body>
 </html>
