@@ -1,16 +1,13 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Restaurant Booking</title>
-  </head>
-  <body>
-   {% extends "bookings/base.html" %}
-{% block title %}Home{% endblock %}
+{% extends "bookings/base.html" %}
+
 {% block content %}
-  <h1>Restaurant Booking System</h1>
-  <p>Home page working ✅</p>
+<div class="hero">
+    <h1>Restaurant Booking System</h1>
+    <p>Book your table in seconds and manage your reservations ease.</p>
+
+    <div class="hero-buttons">
+        <a href="{% url 'book_table' %}" class="btn primary">Book a Table</a>
+        <a href="{% url 'my_reservations' %}" class="btn secondary">My Reservations</a>
+    </div>
+</div>
 {% endblock %}
-  </body>
-</html>
