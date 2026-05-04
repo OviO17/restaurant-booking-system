@@ -10,18 +10,17 @@ The application simulates a real-world restaurant reservation system with user a
 
 ## Live Project
 
-🔗 Live Link: *(add your deployed link here)*
-
+https://restaurant-booking-system-kell.onrender.com
 ---
 
 ## User Experience (UX)
 
 ### Design Goals
 
-- Simple and intuitive booking process
-- Clear navigation between pages
-- Immediate feedback through messages
-- Clean and readable layout
+- Simple and intuitive booking process  
+- Clear navigation between pages  
+- Immediate feedback through messages  
+- Clean and readable layout  
 
 ### User Flow
 
@@ -32,54 +31,96 @@ The application simulates a real-world restaurant reservation system with user a
 
 ---
 
+## Technologies Used
+
+### Languages
+- Python  
+- HTML  
+- CSS  
+
+### Frameworks & Libraries
+- Django  
+- Gunicorn  
+- WhiteNoise  
+
+### Database
+- PostgreSQL (Render)
+
+### Tools & Platforms
+- Git & GitHub  
+- Render (deployment)  
+- VS Code  
+
+---
+
+## Agile Planning
+
+This project was planned using user stories to guide development.
+
+Key user stories included:
+- User can create an account  
+- User can log in and log out  
+- User can book a table  
+- User can edit a reservation  
+- User can cancel a reservation  
+
+Development was completed in stages, focusing on:
+
+1. Authentication  
+2. Booking system  
+3. Reservation management  
+4. Validation and UI improvements  
+
+---
+
 ## Features
 
 ### Authentication
 
-- User registration
-- Login and logout functionality
-- Only authenticated users can access booking features
+- User registration  
+- Login and logout functionality  
+- Only authenticated users can access booking features  
 
 ### Booking System
 
-- Book tables by date, time, and number of guests
-- Automatic table assignment based on availability
-- Prevents double bookings
+- Book tables by date, time, and number of guests  
+- Automatic table assignment based on availability  
+- Prevents double bookings  
 
 ### Reservation Management
 
-- View personal reservations
-- Edit bookings
-- Cancel bookings
-- Cancelled bookings free up table availability
+- View personal reservations  
+- Edit bookings  
+- Cancel bookings  
+- Cancelled bookings free up table availability  
 
 ### Validation and Logic
 
-- Prevents past date bookings
-- Prevents past time bookings on the same day
-- Limits guest numbers from 1 to 12
-- Prevents editing cancelled reservations
-- Only confirmed bookings block table availability
+- Prevents past date bookings  
+- Prevents past time bookings on the same day  
+- Limits guest numbers from 1 to 12  
+- Prevents editing cancelled reservations  
+- Only confirmed bookings block table availability  
 
 ### User Interface
 
-- Navigation bar
-- Card-style reservation display
-- Status indicators
-- Feedback messages
-- Responsive layout
+- Navigation bar  
+- Card-style reservation display  
+- Status indicators  
+- Feedback messages  
+- Responsive layout  
 
 ---
 
 ## Screenshots
 
-### Home Page
+### Home Page  
 ![Home](assets/images/home.png)
 
-### Booking Page
+### Booking Page  
 ![Booking](assets/images/booking.png)
 
-### Reservations Page
+### Reservations Page  
 ![Reservations](assets/images/reservations.png)
 
 ---
@@ -88,65 +129,65 @@ The application simulates a real-world restaurant reservation system with user a
 
 ### Models
 
-#### User
-Django built-in authentication model
+#### User  
+Django built-in authentication model  
 
-#### Client
-- Linked to User
-- Stores personal details
+#### Client  
+- Linked to User  
+- Stores personal details  
 
-#### Table
-- Table number
-- Capacity
+#### Table  
+- Table number  
+- Capacity  
 
-#### Reservation
-- Client
-- Table
-- Date
-- Time
-- Guests
-- Status
+#### Reservation  
+- Client (ForeignKey)  
+- Table (ForeignKey)  
+- Date  
+- Time  
+- Guests  
+- Status (Confirmed / Cancelled)  
 
 ---
 
 ## Testing
 
+Testing was carried out manually across all core features to ensure functionality, validation, and user security.
+
 ### Manual Testing
 
 | Feature | Test Action | Expected Result | Result |
-|---|---|---|---|
-| Signup | Valid data | Account created | Pass |
-| Login | Correct credentials | Login successful | Pass |
-| Booking | Valid input | Reservation created | Pass |
-| Booking | Past date | Error shown | Pass |
-| Booking | Past time | Error shown | Pass |
-| Booking | Too many guests | Error shown | Pass |
-| Edit Booking | Change details | Updated successfully | Pass |
-| Cancel Booking | Click cancel | Status updated | Pass |
-| Rebooking | Cancel then rebook | Table available again | Pass |
-| Security | Access another user data | Blocked | Pass |
-
----
+|--------|------------|---------------|--------|
+| Signup | Valid data | Account created | Pass ✅ |
+| Login | Correct credentials | Login successful | Pass ✅ |
+| Booking | Valid input | Reservation created | Pass ✅ |
+| Booking | Past date | Error shown | Pass ✅ |
+| Booking | Past time | Error shown | Pass ✅ |
+| Booking | Too many guests | Error shown | Pass ✅ |
+| Edit Booking | Change details | Updated successfully | Pass ✅ |
+| Cancel Booking | Click cancel | Status updated | Pass ✅ |
+| Rebooking | Cancel then rebook | Table available again | Pass ✅ |
+| Security | Access another user data | Blocked | Pass ✅ |
 
 ### Validation Testing
 
-- Past date booking blocked
-- Past time booking blocked
-- Guest limits enforced
-- Cancelled bookings cannot be edited
-- Only confirmed bookings block tables
+- Past date booking blocked  
+- Past time booking blocked  
+- Guest limits enforced  
+- Cancelled bookings cannot be edited  
+- Only confirmed bookings block tables  
 
 ---
 
 ## Bugs and Fixes
 
 | Bug | Fix |
-|---|---|
+|-----|-----|
 | Duplicate admin registration | Removed duplicate registration |
 | URL errors | Fixed URL patterns |
-| Static files not loading | Corrected static configuration |
-| Cancelled bookings editable | Added validation logic |
-| Tables not freeing | Filtered by confirmed status |
+| Static files not loading | Configured WhiteNoise and static settings |
+| Cancelled bookings editable | Added backend validation |
+| Tables not freeing after cancel | Filtered by confirmed bookings only |
 
 ---
 
@@ -154,9 +195,9 @@ Django built-in authentication model
 
 ### HTML Validation
 
-W3C Validator used.
+W3C Validator was used to validate HTML.
 
-Note: Django template syntax such as `{% url %}` may show warnings and is expected.
+Note: Django template syntax such as `{% url %}` may show warnings, which is expected.
 
 ![HTML Validation](assets/images/html-validation.png)
 
@@ -178,4 +219,3 @@ python -m venv venv
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
-
