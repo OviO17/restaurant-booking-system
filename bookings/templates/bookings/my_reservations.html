@@ -6,14 +6,20 @@
   {% if reservations %}
     <ul>
       {% for r in reservations %}
-        <li>
+   <li>
   {{ r.date }} at {{ r.time }} — {{ r.guests }} guests — {{ r.table }}
 
   {% if r.status == "confirmed" %}
+    
+    <form method="get" action="{% url 'edit_reservation' r.id %}" style="display:inline;">
+      <button type="submit">Edit</button>
+    </form>
+
     <form method="post" action="{% url 'cancel_reservation' r.id %}" style="display:inline;">
       {% csrf_token %}
       <button type="submit">Cancel</button>
     </form>
+
   {% endif %}
 </li>
       {% endfor %}s

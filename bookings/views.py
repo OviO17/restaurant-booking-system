@@ -117,3 +117,36 @@ def cancel_reservation(request, reservation_id):
         messages.success(request, "Reservation cancelled successfully.")
 
     return redirect("my_reservations")
+
+@login_required
+def edit_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+
+    if reservation.client.user != request.user:
+        messages.error(request, "Not allowed.")
+        return redirect("my_reservations")
+
+    if request.method == "POST":
+        form = ReservationForm(request.POST, instance=reservation)
+        if form.is_valid():
+            date = form.cleaned_data["date"]
+            time = form.cleaned_data["time"]
+            guests = form.cleaned_data["guests"]
+
+            table = find_available_table(date, time, guests)
+
+            if not table:
+                form.add_error(None, "No tables available.")
+            else:
+                reservation.date = date
+                reservation.time = time
+                reservation.guests = guests
+                reservation.table = table
+                reservation.save()
+
+                messages.success(request, "Reservation updated!")
+                return redirect("my_reservations")
+    else:
+        form = ReservationForm(instance=reservation)
+
+    return render(request, "bookings/edit_reservation.html", {"form": form})
