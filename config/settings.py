@@ -121,3 +121,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+import os
+
+SECRET_KEY = os.environ.get("SECRET_KEY")
+
+DEBUG = False
+
+ALLOWED_HOSTS = ["*"]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
