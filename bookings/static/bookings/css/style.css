@@ -190,6 +190,348 @@ body {
     background-color: #555;
 }
 
+.reservations-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.reservation-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 280px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.reservation-card p {
+    margin: 5px 0;
+}
+
+.status {
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.status.confirmed {
+    background-color: #28a745;
+    color: white;
+}
+
+.status.cancelled {
+    background-color: #dc3545;
+    color: white;
+}
+
+.card-buttons {
+    margin-top: /* General page styling */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #222;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Navigation */
+nav {
+  background-color: #2f2f2f;
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+nav a:hover {
+  color: #f4c542;
+}
+
+.logout-form {
+  display: inline;
+  margin: 0;
+}
+
+.logout-btn {
+  background-color: #b00020;
+  color: white;
+  border: none;
+  padding: 9px 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.logout-btn:hover {
+  background-color: #8f001a;
+}
+
+/* Main content */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 35px 20px;
+}
+
+h1,
+h2 {
+  color: #2f2f2f;
+  margin-top: 0;
+}
+
+/* Hero homepage */
+.hero {
+  text-align: center;
+  background-color: white;
+  padding: 80px 25px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 28px;
+}
+
+.hero-buttons {
+  margin-top: 20px;
+}
+
+/* Buttons */
+.btn,
+button {
+  display: inline-block;
+  background-color: #157347;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  cursor: pointer;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+.btn:hover,
+button:hover {
+  opacity: 0.9;
+}
+
+.btn.primary {
+  background-color: #b00020;
+}
+
+.btn.secondary {
+  background-color: #2f2f2f;
+}
+
+.danger-btn,
+.btn.danger {
+  background-color: #b00020;
+}
+
+.inline-form {
+  display: inline;
+  margin-right: 8px;
+}
+
+/* Forms */
+form {
+  margin-top: 15px;
+}
+
+form p {
+  margin-bottom: 14px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input,
+select {
+  width: 100%;
+  max-width: 420px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid #157347;
+  border-color: #157347;
+}
+
+/* Form page card */
+form:not(.logout-form):not(.inline-form) {
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px;
+  max-width: 520px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Reservation cards */
+.reservations-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card,
+.reservation-card {
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  width: 300px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.card p,
+.reservation-card p {
+  margin: 8px 0;
+}
+
+.card-buttons {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn.small {
+  padding: 7px 13px;
+  font-size: 0.9rem;
+}
+
+/* Status badges */
+.badge,
+.status {
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.confirmed,
+.status.confirmed {
+  background-color: #157347;
+}
+
+.cancelled,
+.status.cancelled {
+  background-color: #b00020;
+}
+
+.pending,
+.status.pending {
+  background-color: #b8860b;
+}
+
+/* Django messages */
+.messages {
+  margin-bottom: 20px;
+}
+
+.success {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+/* Error lists from Django forms */
+.errorlist {
+  color: #b00020;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Responsive design */
+@media screen and (max-width: 700px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .container {
+    padding: 20px 15px;
+  }
+
+  .hero {
+    padding: 50px 18px;
+  }
+
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+  input,
+  select,
+  form:not(.logout-form):not(.inline-form) {
+    max-width: 100%;
+  }
+
+  .card,
+  .reservation-card {
+    width: 100%;
+  }
+
+  .btn,
+  button {
+    margin-bottom: 8px;
+  }
+}10px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn.small {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+}
+
+.btn.danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
 /* Responsive design */
 @media screen and (max-width: 600px) {
   nav a,

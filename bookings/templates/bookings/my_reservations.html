@@ -1,40 +1,38 @@
 {% extends "bookings/base.html" %}
 
-{% block title %}My Reservations{% endblock %}
-
 {% block content %}
-  <h1>My Reservations</h1>
+<h2>My Reservations</h2>
 
-  {% for r in reservations %}
-    <div class="card">
-      <p><strong>Date:</strong> {{ r.date }}</p>
-      <p><strong>Time:</strong> {{ r.time }}</p>
-      <p><strong>Guests:</strong> {{ r.guests }}</p>
-      <p><strong>Table:</strong> {{ r.table }}</p>
+<div class="reservations-container">
+    {% for reservation in reservations %}
+        <div class="reservation-card">
 
-      <p>
-        <strong>Status:</strong>
-        {% if r.status == "confirmed" %}
-          <span class="badge confirmed">Confirmed</span>
-        {% elif r.status == "cancelled" %}
-          <span class="badge cancelled">Cancelled</span>
-        {% else %}
-          <span class="badge pending">Pending</span>
-        {% endif %}
-      </p>
+            <p><strong>Date:</strong> {{ reservation.date }}</p>
+            <p><strong>Time:</strong> {{ reservation.time }}</p>
+            <p><strong>Guests:</strong> {{ reservation.guests }}</p>
+            <p><strong>Table:</strong> {{ reservation.table }}</p>
 
-      {% if r.status == "confirmed" %}
-        <form method="get" action="{% url 'edit_reservation' r.id %}" class="inline-form">
-          <button type="submit">Edit</button>
-        </form>
+            <p>
+                <strong>Status:</strong>
+                <span class="status {{ reservation.status|lower }}">
+                    {{ reservation.status }}
+                </span>
+            </p>
 
-        <form method="post" action="{% url 'cancel_reservation' r.id %}" class="inline-form">
-          {% csrf_token %}
-          <button type="submit" class="danger-btn">Cancel</button>
-        </form>
-      {% endif %}
-    </div>
-  {% empty %}
-    <p>No reservations yet.</p>
-  {% endfor %}
+            <div class="card-buttons">
+                {% if reservation.status != "Cancelled" %}
+                    <a href="{% url 'edit_reservation' reservation.id %}" class="btn small">Edit</a>
+
+                    <form action="{% url 'cancel_reservation' reservation.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn small danger">Cancel</button>
+                    </form>
+                {% endif %}
+            </div>
+
+        </div>
+    {% empty %}
+        <p>No reservations yet.</p>
+    {% endfor %}
+</div>
 {% endblock %}
