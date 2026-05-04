@@ -2,32 +2,40 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Restaurant Booking{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'bookings/css/style.css' %}">
   </head>
+
   <body>
-    <body>
-  <nav>
-    <a href="{% url 'home' %}">Home</a>
+    <nav>
+      <a href="{% url 'home' %}">Home</a>
 
-    {% if user.is_authenticated %}
-      <a href="{% url 'book_table' %}">Book</a>
-      <a href="{% url 'my_reservations' %}">My Reservations</a>
+      {% if user.is_authenticated %}
+        <a href="{% url 'book_table' %}">Book</a>
+        <a href="{% url 'my_reservations' %}">My Reservations</a>
 
-      <form action="{% url 'logout' %}" method="post" style="display:inline;">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-      </form>
-    {% else %}
-      <a href="{% url 'signup' %}">Sign up</a>
-      <a href="{% url 'login' %}">Login</a>
-    {% endif %}
-  </nav>
+        <form action="{% url 'logout' %}" method="post" class="logout-form">
+          {% csrf_token %}
+          <button type="submit" class="logout-btn">Logout</button>
+        </form>
+      {% else %}
+        <a href="{% url 'signup' %}">Sign up</a>
+        <a href="{% url 'login' %}">Login</a>
+      {% endif %}
+    </nav>
 
-  <div class="container">
-    {% block content %}{% endblock %}
-  </div>
-</body>
+    <main class="container">
+      {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+            <p class="{{ message.tags }}">{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% block content %}{% endblock %}
+    </main>
+  </body>
 </html>

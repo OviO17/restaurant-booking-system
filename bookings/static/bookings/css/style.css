@@ -1,14 +1,15 @@
-/* General */
+/* General page styling */
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
+  color: #222;
   margin: 0;
 }
 
-/* Navbar */
+/* Navigation */
 nav {
   background-color: #333;
-  padding: 15px;
+  padding: 15px 20px;
 }
 
 nav a {
@@ -18,64 +19,81 @@ nav a {
   font-weight: bold;
 }
 
-nav button {
-  background-color: red;
+nav a:hover {
+  text-decoration: underline;
+}
+
+.logout-form {
+  display: inline;
+}
+
+.logout-btn {
+  background-color: #b00020;
   color: white;
   border: none;
-  padding: 5px 10px;
+  padding: 7px 12px;
   cursor: pointer;
 }
 
-/* Container */
+/* Main content */
 .container {
-  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 25px;
 }
 
-/* Headings */
-h1, h2 {
+h1,
+h2 {
   color: #333;
 }
 
 /* Forms */
 form {
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
-input, select {
+input,
+select {
+  width: 100%;
+  max-width: 350px;
   padding: 8px;
   margin-bottom: 10px;
-  width: 100%;
-  max-width: 300px;
+  display: block;
 }
 
 button {
-  padding: 10px 15px;
-  background-color: green;
+  background-color: #157347;
   color: white;
   border: none;
+  padding: 9px 14px;
   cursor: pointer;
+  border-radius: 4px;
 }
 
 button:hover {
   opacity: 0.9;
 }
 
-/* Messages */
-.success {
-  color: green;
+.inline-form {
+  display: inline;
+  margin-right: 8px;
 }
 
-.error {
-  color: red;
+.danger-btn {
+  background-color: #b00020;
 }
 
-/* Cards */
+/* Reservation cards */
 .card {
-  background: white;
-  padding: 15px;
-  margin-bottom: 15px;
+  background-color: white;
+  padding: 18px;
+  margin-bottom: 18px;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.card p {
+  margin: 8px 0;
 }
 
 /* Status badges */
@@ -83,13 +101,55 @@ button:hover {
   padding: 5px 10px;
   border-radius: 5px;
   color: white;
-  font-size: 12px;
+  font-size: 0.85rem;
+  font-weight: bold;
 }
 
 .confirmed {
-  background-color: green;
+  background-color: #157347;
 }
 
 .cancelled {
-  background-color: red;
+  background-color: #b00020;
+}
+
+.pending {
+  background-color: #b8860b;
+}
+
+/* Django messages */
+.messages {
+  margin-bottom: 20px;
+}
+
+.success {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 12px;
+  border-radius: 5px;
+}
+
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 12px;
+  border-radius: 5px;
+}
+
+/* Responsive design */
+@media screen and (max-width: 600px) {
+  nav a,
+  .logout-form {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .container {
+    padding: 15px;
+  }
+
+  input,
+  select {
+    max-width: 100%;
+  }
 }
