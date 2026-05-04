@@ -1,0 +1,70 @@
+/* General */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+}
+
+/* Navbar */
+nav {
+  background-color: #333;
+  padding: 15px;
+}
+
+nav a {
+  color: white;
+  margin-right: 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* Container */
+.container {
+  padding: 20px;
+}
+
+/* Headings */
+h1, h2 {
+  color: #333;
+}
+
+/* Forms */
+form {
+  margin-top: 20px;
+}
+
+input, select {
+  padding: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+  max-width: 300px;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: green;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+/* Messages */
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}
