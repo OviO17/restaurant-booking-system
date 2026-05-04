@@ -7,9 +7,16 @@
     <ul>
       {% for r in reservations %}
         <li>
-          {{ r.date }} at {{ r.time }} — {{ r.guests }} guests — {{ r.table }} — {{ r.get_status_display }}
-        </li>
-      {% endfor %}
+  {{ r.date }} at {{ r.time }} — {{ r.guests }} guests — {{ r.table }}
+
+  {% if r.status == "confirmed" %}
+    <form method="post" action="{% url 'cancel_reservation' r.id %}" style="display:inline;">
+      {% csrf_token %}
+      <button type="submit">Cancel</button>
+    </form>
+  {% endif %}
+</li>
+      {% endfor %}s
     </ul>
   {% else %}
     <p>No reservations yet.</p>

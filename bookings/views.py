@@ -98,3 +98,22 @@ def my_reservations(request):
     client = Client.objects.filter(user=request.user).first()
     reservations = Reservation.objects.filter(client=client).order_by("-date", "-time")
     return render(request, "bookings/my_reservations.html", {"reservations": reservations})
+
+from django.shortcuts import get_object_or_404
+
+
+@login_required
+def cancel_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+
+    # Only allow user to cancel their own booking
+    if reservation.client.user != request.user:
+        messages.error(request, "You are not allowed to cancel this booking.")
+        return redirect("my_reservations")
+
+    if request.method == "POST":
+        reservation.status = Reservation.STATUS_CANCELLED
+        reservation.save()
+        messages.success(request, "Reservation cancelled successfully.")
+
+    return redirect("my_reservations")
