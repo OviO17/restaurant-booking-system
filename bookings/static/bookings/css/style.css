@@ -68,3 +68,28 @@ button:hover {
 .error {
   color: red;
 }
+
+/* Cards */
+.card {
+  background: white;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Status badges */
+.badge {
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+  font-size: 12px;
+}
+
+.confirmed {
+  background-color: green;
+}
+
+.cancelled {
+  background-color: red;
+}

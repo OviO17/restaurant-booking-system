@@ -1,30 +1,32 @@
-{% extends "bookings/base.html" %}
-{% block title %}My Reservations{% endblock %}
-{% block content %}
-  <h2>My Reservations</h2>
+<h2>My Reservations</h2>
 
-  {% if reservations %}
-    <ul>
-      {% for r in reservations %}
-   <li>
-  {{ r.date }} at {{ r.time }} — {{ r.guests }} guests — {{ r.table }}
+{% for r in reservations %}
+  <div class="card">
+    <p><strong>Date:</strong> {{ r.date }}</p>
+    <p><strong>Time:</strong> {{ r.time }}</p>
+    <p><strong>Guests:</strong> {{ r.guests }}</p>
+    <p><strong>Table:</strong> {{ r.table }}</p>
 
-  {% if r.status == "confirmed" %}
-    
-    <form method="get" action="{% url 'edit_reservation' r.id %}" style="display:inline;">
-      <button type="submit">Edit</button>
-    </form>
+    <p>
+      <strong>Status:</strong>
+      {% if r.status == "confirmed" %}
+        <span class="badge confirmed">Confirmed</span>
+      {% else %}
+        <span class="badge cancelled">Cancelled</span>
+      {% endif %}
+    </p>
 
-    <form method="post" action="{% url 'cancel_reservation' r.id %}" style="display:inline;">
-      {% csrf_token %}
-      <button type="submit">Cancel</button>
-    </form>
+    {% if r.status == "confirmed" %}
+      <form method="get" action="{% url 'edit_reservation' r.id %}" style="display:inline;">
+        <button type="submit">Edit</button>
+      </form>
 
-  {% endif %}
-</li>
-      {% endfor %}s
-    </ul>
-  {% else %}
-    <p>No reservations yet.</p>
-  {% endif %}
-{% endblock %}
+      <form method="post" action="{% url 'cancel_reservation' r.id %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Cancel</button>
+      </form>
+    {% endif %}
+  </div>
+{% empty %}
+  <p>No reservations yet.</p>
+{% endfor %}
