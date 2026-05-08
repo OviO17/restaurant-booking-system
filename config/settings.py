@@ -8,7 +8,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-local-dev-key")
 
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".onrender.com"]
+<!-- ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".onrender.com"] -->
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -51,9 +51,14 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
-    "default": dj_database_url.config(
-        default=os.environ.get("DATABASE_URL")
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'restaurant_db',
+        'USER': 'postgres',
+        'PASSWORD': 'fullstack',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -89,3 +94,6 @@ STORAGES = {
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"
