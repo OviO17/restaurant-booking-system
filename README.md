@@ -4,6 +4,15 @@
 
 The Green Fork is a full-stack Django application for reserving restaurant tables. Registered users can create, view, edit, cancel, and permanently delete their own reservations. The application assigns the smallest suitable available table, prevents confirmed double bookings, and keeps each user's data private.
 
+## Assessor Testing Credentials
+
+To test the full reservation functionality, please use the following account:
+
+Username: assessor_admin
+Password: Assessor123!
+
+This account has access to all booking, editing, cancellation, and deletion features required for assessment.
+
 ## Project goals
 
 - Make booking understandable without knowing database date or time formats.
