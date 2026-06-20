@@ -168,3 +168,22 @@ def edit_reservation(request, reservation_id):
         form = ReservationForm(instance=reservation)
 
     return render(request, "bookings/edit_reservation.html", {"form": form})
+
+@login_required
+def delete_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+
+    if reservation.client.user != request.user:
+        messages.error(request, "You are not allowed to delete this reservation.")
+        return redirect("my_reservations")
+
+    if request.method == "POST":
+        reservation.delete()
+        messages.success(request, "Reservation deleted successfully.")
+        return redirect("my_reservations")
+
+    return render(
+        request,
+        "bookings/delete_reservation.html",
+        {"reservation": reservation},
+    )

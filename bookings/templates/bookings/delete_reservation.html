@@ -1,0 +1,22 @@
+{% extends "bookings/base.html" %}
+
+{% block title %}Delete Reservation{% endblock %}
+
+{% block content %}
+  <h1>Delete Reservation</h1>
+
+  <p>Are you sure you want to permanently delete this reservation?</p>
+
+  <div class="card">
+    <p><strong>Date:</strong> {{ reservation.date }}</p>
+    <p><strong>Time:</strong> {{ reservation.time }}</p>
+    <p><strong>Guests:</strong> {{ reservation.guests }}</p>
+    <p><strong>Table:</strong> {{ reservation.table }}</p>
+  </div>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="danger-btn">Yes, Delete</button>
+    <a href="{% url 'my_reservations' %}" class="btn secondary">Cancel</a>
+  </form>
+{% endblock %}

@@ -1,9 +1,11 @@
 {% extends "bookings/base.html" %}
 
-{% block content %}
-<h2>My Reservations</h2>
+{% block title %}My Reservations{% endblock %}
 
-<div class="reservations-container">
+{% block content %}
+<h1>My Reservations</h1>
+
+{% if reservations %}
     {% for reservation in reservations %}
         <div class="reservation-card">
 
@@ -11,28 +13,44 @@
             <p><strong>Time:</strong> {{ reservation.time }}</p>
             <p><strong>Guests:</strong> {{ reservation.guests }}</p>
             <p><strong>Table:</strong> {{ reservation.table }}</p>
+            <p><strong>Status:</strong> {{ reservation.status }}</p>
 
-            <p>
-                <strong>Status:</strong>
-                <span class="status {{ reservation.status|lower }}">
-                    {{ reservation.status }}
-                </span>
-            </p>
+            {% if reservation.status == "confirmed" %}
 
-            <div class="card-buttons">
-                {% if reservation.status != "Cancelled" %}
-                    <a href="{% url 'edit_reservation' reservation.id %}" class="btn small">Edit</a>
+                <a href="{% url 'edit_reservation' reservation.id %}" class="btn">
+                    Edit
+                </a>
 
-                    <form action="{% url 'cancel_reservation' reservation.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="btn small danger">Cancel</button>
-                    </form>
-                {% endif %}
-            </div>
+                <form method="post"
+                      action="{% url 'cancel_reservation' reservation.id %}"
+                      class="inline-form">
+                    {% csrf_token %}
+                    <button type="submit" class="danger-btn">
+                        Cancel
+                    </button>
+                </form>
+
+                <a href="{% url 'delete_reservation' reservation.id %}"
+                   class="danger-btn">
+                    Delete
+                </a>
+
+            {% endif %}
+
+            {% if reservation.status == "cancelled" %}
+
+                <a href="{% url 'delete_reservation' reservation.id %}"
+                   class="danger-btn">
+                    Delete
+                </a>
+
+            {% endif %}
 
         </div>
-    {% empty %}
-        <p>No reservations yet.</p>
     {% endfor %}
-</div>
+
+{% else %}
+    <p>You have no reservations.</p>
+{% endif %}
+
 {% endblock %}

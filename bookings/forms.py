@@ -1,44 +1,16 @@
-from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from django.utils import timezone
-
-from .models import Reservation
-
-
-class SignUpForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-    full_name = forms.CharField(max_length=100)
-    phone = forms.CharField(max_length=20)
-
-    referral_name = forms.CharField(max_length=100, required=False)
-    home_address = forms.CharField(max_length=200, required=False)
-    occupation = forms.CharField(max_length=100, required=False)
-
-    class Meta:
-        model = User
-        fields = (
-            "username",
-            "email",
-            "full_name",
-            "phone",
-            "referral_name",
-            "home_address",
-            "occupation",
-            "password1",
-            "password2",
-        )
-
-
 class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
         fields = ["date", "time", "guests"]
+        widgets = {
+            "date": forms.DateInput(attrs={"type": "date"}),
+            "time": forms.TimeInput(attrs={"type": "time"}),
+            "guests": forms.NumberInput(attrs={"min": 1, "max": 12}),
+        }
 
     def clean_date(self):
         date = self.cleaned_data["date"]
 
-        # Prevent booking in the past
         if date < timezone.localdate():
             raise forms.ValidationError("You cannot book a past date.")
 
@@ -49,7 +21,6 @@ class ReservationForm(forms.ModelForm):
         date = cleaned_data.get("date")
         time = cleaned_data.get("time")
 
-        # Prevent booking earlier today (past time)
         if date == timezone.localdate() and time:
             now_time = timezone.now().time()
             if time < now_time:
