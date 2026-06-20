@@ -1,11 +1,27 @@
 {% extends "bookings/base.html" %}
+{% block title %}Edit reservation | The Green Fork{% endblock %}
 {% block content %}
-<h2>Edit Reservation</h2>
-
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Update</button>
-</form>
-
+  <section class="form-page">
+    <div>
+      <p class="eyebrow">Manage booking</p>
+      <h1>Edit reservation</h1>
+      <p class="lead">Update the details below and we will check table availability again.</p>
+    </div>
+    <form method="post" class="panel booking-form" novalidate>
+      {% csrf_token %}
+      {% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}
+      {% for field in form %}
+        <div class="field-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% if field.help_text %}<span class="help-text">{{ field.help_text }}</span>{% endif %}
+          {{ field.errors }}
+        </div>
+      {% endfor %}
+      <div class="actions">
+        <button type="submit" class="btn primary">Save changes</button>
+        <a href="{% url 'my_reservations' %}" class="btn secondary">Back</a>
+      </div>
+    </form>
+  </section>
 {% endblock %}

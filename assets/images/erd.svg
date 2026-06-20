@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="560" viewBox="0 0 1000 560" role="img" aria-labelledby="title desc">
+  <title id="title">Restaurant booking entity relationship diagram</title>
+  <desc id="desc">A User has one Client; a Client has many Reservations; a Table has many Reservations.</desc>
+  <rect width="1000" height="560" fill="#faf8f1"/>
+  <g font-family="Arial, sans-serif">
+    <g transform="translate(40 60)"><rect width="220" height="185" rx="10" fill="#fff" stroke="#285943" stroke-width="3"/><rect width="220" height="42" rx="10" fill="#285943"/><text x="18" y="28" fill="#fff" font-size="18" font-weight="bold">User</text><text x="18" y="72">PK id</text><text x="18" y="102">username</text><text x="18" y="132">email</text><text x="18" y="162">password (hashed)</text></g>
+    <g transform="translate(390 35)"><rect width="230" height="235" rx="10" fill="#fff" stroke="#285943" stroke-width="3"/><rect width="230" height="42" rx="10" fill="#285943"/><text x="18" y="28" fill="#fff" font-size="18" font-weight="bold">Client</text><text x="18" y="72">PK id</text><text x="18" y="102">FK user_id (unique)</text><text x="18" y="132">full_name</text><text x="18" y="162">email (unique)</text><text x="18" y="192">phone</text><text x="18" y="222">profile details</text></g>
+    <g transform="translate(385 335)"><rect width="240" height="185" rx="10" fill="#fff" stroke="#285943" stroke-width="3"/><rect width="240" height="42" rx="10" fill="#285943"/><text x="18" y="28" fill="#fff" font-size="18" font-weight="bold">Table</text><text x="18" y="72">PK id</text><text x="18" y="102">table_number (unique)</text><text x="18" y="132">capacity</text></g>
+    <g transform="translate(750 135)"><rect width="220" height="285" rx="10" fill="#fff" stroke="#a26c19" stroke-width="3"/><rect width="220" height="42" rx="10" fill="#a26c19"/><text x="18" y="28" fill="#fff" font-size="18" font-weight="bold">Reservation</text><text x="18" y="72">PK id</text><text x="18" y="102">FK client_id</text><text x="18" y="132">FK table_id</text><text x="18" y="162">date</text><text x="18" y="192">time</text><text x="18" y="222">guests</text><text x="18" y="252">status</text></g>
+    <g fill="none" stroke="#444" stroke-width="3"><path d="M260 150 H390"/><path d="M620 150 H750"/><path d="M625 420 H690 V300 H750"/></g>
+    <g fill="#222" font-size="15" font-weight="bold"><text x="278" y="140">1</text><text x="365" y="140">1</text><text x="640" y="140">1</text><text x="720" y="140">many</text><text x="645" y="410">1</text><text x="710" y="315">many</text></g>
+    <text x="40" y="545" fill="#555" font-size="14">Confirmed reservations are unique per table, date, and time. Cancelled records do not block a table.</text>
+  </g>
+</svg>

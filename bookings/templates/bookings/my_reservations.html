@@ -1,56 +1,45 @@
 {% extends "bookings/base.html" %}
-
-{% block title %}My Reservations{% endblock %}
-
+{% block title %}My reservations | The Green Fork{% endblock %}
 {% block content %}
-<h1>My Reservations</h1>
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">Your account</p>
+      <h1>My reservations</h1>
+    </div>
+    <a href="{% url 'book_table' %}" class="btn primary">New booking</a>
+  </div>
 
-{% if reservations %}
-    {% for reservation in reservations %}
-        <div class="reservation-card">
-
-            <p><strong>Date:</strong> {{ reservation.date }}</p>
-            <p><strong>Time:</strong> {{ reservation.time }}</p>
-            <p><strong>Guests:</strong> {{ reservation.guests }}</p>
-            <p><strong>Table:</strong> {{ reservation.table }}</p>
-            <p><strong>Status:</strong> {{ reservation.status }}</p>
-
+  {% if reservations %}
+    <div class="reservations-container">
+      {% for reservation in reservations %}
+        <article class="reservation-card">
+          <div class="card-heading">
+            <h2>{{ reservation.date|date:"D, j M Y" }}</h2>
+            <span class="status {{ reservation.status }}">{{ reservation.get_status_display }}</span>
+          </div>
+          <dl class="booking-details">
+            <div><dt>Arrival</dt><dd>{{ reservation.time|time:"H:i" }}</dd></div>
+            <div><dt>Party</dt><dd>{{ reservation.guests }} guest{{ reservation.guests|pluralize }}</dd></div>
+            <div><dt>Table</dt><dd>{{ reservation.table.table_number }}</dd></div>
+          </dl>
+          <div class="card-buttons">
             {% if reservation.status == "confirmed" %}
-
-                <a href="{% url 'edit_reservation' reservation.id %}" class="btn">
-                    Edit
-                </a>
-
-                <form method="post"
-                      action="{% url 'cancel_reservation' reservation.id %}"
-                      class="inline-form">
-                    {% csrf_token %}
-                    <button type="submit" class="danger-btn">
-                        Cancel
-                    </button>
-                </form>
-
-                <a href="{% url 'delete_reservation' reservation.id %}"
-                   class="danger-btn">
-                    Delete
-                </a>
-
+              <a href="{% url 'edit_reservation' reservation.id %}" class="btn secondary">Edit</a>
+              <form method="post" action="{% url 'cancel_reservation' reservation.id %}" class="inline-form">
+                {% csrf_token %}
+                <button type="submit" class="btn warning">Cancel</button>
+              </form>
             {% endif %}
-
-            {% if reservation.status == "cancelled" %}
-
-                <a href="{% url 'delete_reservation' reservation.id %}"
-                   class="danger-btn">
-                    Delete
-                </a>
-
-            {% endif %}
-
-        </div>
-    {% endfor %}
-
-{% else %}
-    <p>You have no reservations.</p>
-{% endif %}
-
+            <a href="{% url 'delete_reservation' reservation.id %}" class="btn danger">Delete permanently</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state panel">
+      <h2>No reservations yet</h2>
+      <p>Choose a date and we will find the right table for your party.</p>
+      <a href="{% url 'book_table' %}" class="btn primary">Book your first table</a>
+    </div>
+  {% endif %}
 {% endblock %}

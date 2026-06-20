@@ -1,22 +1,20 @@
 {% extends "bookings/base.html" %}
-
-{% block title %}Delete Reservation{% endblock %}
-
+{% block title %}Delete reservation | The Green Fork{% endblock %}
 {% block content %}
-  <h1>Delete Reservation</h1>
-
-  <p>Are you sure you want to permanently delete this reservation?</p>
-
-  <div class="card">
-    <p><strong>Date:</strong> {{ reservation.date }}</p>
-    <p><strong>Time:</strong> {{ reservation.time }}</p>
-    <p><strong>Guests:</strong> {{ reservation.guests }}</p>
-    <p><strong>Table:</strong> {{ reservation.table }}</p>
-  </div>
-
-  <form method="post">
-    {% csrf_token %}
-    <button type="submit" class="danger-btn">Yes, Delete</button>
-    <a href="{% url 'my_reservations' %}" class="btn secondary">Cancel</a>
-  </form>
+  <section class="confirm-page panel">
+    <p class="eyebrow danger-text">Permanent action</p>
+    <h1>Delete this reservation?</h1>
+    <p>This removes the record from the database and cannot be undone. If you only need to release the table while retaining the booking history, choose cancel instead.</p>
+    <dl class="booking-details summary">
+      <div><dt>Date</dt><dd>{{ reservation.date|date:"j F Y" }}</dd></div>
+      <div><dt>Time</dt><dd>{{ reservation.time|time:"H:i" }}</dd></div>
+      <div><dt>Guests</dt><dd>{{ reservation.guests }}</dd></div>
+      <div><dt>Table</dt><dd>{{ reservation.table.table_number }}</dd></div>
+    </dl>
+    <form method="post" class="confirm-form">
+      {% csrf_token %}
+      <button type="submit" class="btn danger">Yes, delete permanently</button>
+      <a href="{% url 'my_reservations' %}" class="btn secondary">Keep reservation</a>
+    </form>
+  </section>
 {% endblock %}

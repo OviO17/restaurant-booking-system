@@ -4,38 +4,47 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Restaurant Booking{% endblock %}</title>
+    <meta name="description" content="Reserve and manage a restaurant table online.">
+    <title>{% block title %}The Green Fork{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'bookings/css/style.css' %}">
   </head>
-
   <body>
-    <nav>
-      <a href="{% url 'home' %}">Home</a>
-
-      {% if user.is_authenticated %}
-        <a href="{% url 'book_table' %}">Book</a>
-        <a href="{% url 'my_reservations' %}">My Reservations</a>
-
-        <form action="{% url 'logout' %}" method="post" class="logout-form">
-          {% csrf_token %}
-          <button type="submit" class="logout-btn">Logout</button>
-        </form>
-      {% else %}
-        <a href="{% url 'signup' %}">Sign up</a>
-        <a href="{% url 'login' %}">Login</a>
-      {% endif %}
-    </nav>
+    <header class="site-header">
+      <nav class="nav" aria-label="Main navigation">
+        <a class="brand" href="{% url 'home' %}">The Green Fork</a>
+        <div class="nav-links">
+          <a href="{% url 'home' %}">Home</a>
+          {% if user.is_authenticated %}
+            <a href="{% url 'book_table' %}">Book a table</a>
+            <a href="{% url 'my_reservations' %}">My reservations</a>
+            <form action="{% url 'logout' %}" method="post" class="logout-form">
+              {% csrf_token %}
+              <button type="submit" class="nav-button">Log out</button>
+            </form>
+          {% else %}
+            <a href="{% url 'signup' %}">Create account</a>
+            <a href="{% url 'login' %}">Log in</a>
+          {% endif %}
+        </div>
+      </nav>
+    </header>
 
     <main class="container">
+      {% if user.is_authenticated %}
+        <p class="welcome">Signed in as <strong>{{ user.username }}</strong></p>
+      {% endif %}
       {% if messages %}
-        <div class="messages">
+        <div class="messages" aria-live="polite">
           {% for message in messages %}
-            <p class="{{ message.tags }}">{{ message }}</p>
+            <p class="message {{ message.tags }}">{{ message }}</p>
           {% endfor %}
         </div>
       {% endif %}
-
       {% block content %}{% endblock %}
     </main>
+
+    <footer>
+      <p>&copy; {% now "Y" %} The Green Fork</p>
+    </footer>
   </body>
 </html>

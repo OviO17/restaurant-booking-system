@@ -18,7 +18,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "bookings",
+    "bookings.apps.BookingsConfig",
 ]
 
 MIDDLEWARE = [
@@ -64,12 +64,8 @@ if DATABASE_URL:
 else:
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": "restaurant_db",
-            "USER": "postgres",
-            "PASSWORD": "fullstack",
-            "HOST": "localhost",
-            "PORT": "5432",
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 
@@ -89,7 +85,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = "en-us"
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/London"
 USE_I18N = True
 USE_TZ = True
 

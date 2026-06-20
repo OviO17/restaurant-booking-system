@@ -1,12 +1,13 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+from django.db.models import Q
 
 
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     full_name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
-    phone = models.CharField(max_length=20)
+    phone = models.CharField(max_length=20, blank=True)
 
     referral_name = models.CharField(max_length=100, blank=True)
     home_address = models.CharField(max_length=200, blank=True)
@@ -37,21 +38,34 @@ class Reservation(models.Model):
         (STATUS_CANCELLED, "Cancelled"),
     ]
 
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="reservations")
-    table = models.ForeignKey(Table, on_delete=models.PROTECT, related_name="reservations")
+    client = models.ForeignKey(
+        Client,
+        on_delete=models.CASCADE,
+        related_name="reservations",
+    )
+    table = models.ForeignKey(
+        Table,
+        on_delete=models.PROTECT,
+        related_name="reservations",
+    )
 
     date = models.DateField()
     time = models.TimeField()
     guests = models.PositiveIntegerField()
 
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_PENDING)
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default=STATUS_PENDING,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         constraints = [
             models.UniqueConstraint(
                 fields=["table", "date", "time"],
-                name="unique_table_booking_per_slot",
+                condition=Q(status="confirmed"),
+                name="unique_confirmed_table_booking_per_slot",
             )
         ]
 

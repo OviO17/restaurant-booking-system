@@ -6,6 +6,7 @@ from django.utils import timezone
 
 from .forms import ReservationForm, SignUpForm
 from .models import Client, Reservation, Table
+from .signals import profile_defaults
 
 
 def home(request):
@@ -21,14 +22,16 @@ def signup(request):
             user.email = form.cleaned_data["email"]
             user.save()
 
-            Client.objects.create(
+            Client.objects.update_or_create(
                 user=user,
-                full_name=form.cleaned_data["full_name"],
-                email=form.cleaned_data["email"],
-                phone=form.cleaned_data["phone"],
-                referral_name=form.cleaned_data["referral_name"],
-                home_address=form.cleaned_data["home_address"],
-                occupation=form.cleaned_data["occupation"],
+                defaults={
+                    "full_name": form.cleaned_data["full_name"],
+                    "email": form.cleaned_data["email"],
+                    "phone": form.cleaned_data["phone"],
+                    "referral_name": form.cleaned_data["referral_name"],
+                    "home_address": form.cleaned_data["home_address"],
+                    "occupation": form.cleaned_data["occupation"],
+                },
             )
 
             login(request, user)
@@ -40,30 +43,39 @@ def signup(request):
     return render(request, "registration/signup.html", {"form": form})
 
 
-def find_available_table(date, time, guests):
+def get_client_for_user(user):
+    """Return a profile, repairing accounts created before signals were added."""
+    client = Client.objects.filter(user=user).first()
+    if client:
+        return client
+
+    defaults = profile_defaults(user)
+    if Client.objects.filter(email=defaults["email"]).exists():
+        defaults["email"] = f"{user.username}-{user.pk}@users.local"
+    return Client.objects.create(user=user, **defaults)
+
+
+def find_available_table(date, time, guests, exclude_reservation=None):
     """
     Return the first table with enough seats that is not already confirmed
     for the requested date and time.
     """
-    return (
-        Table.objects.filter(capacity__gte=guests)
-        .exclude(
-            reservations__date=date,
-            reservations__time=time,
-            reservations__status=Reservation.STATUS_CONFIRMED,
-        )
-        .order_by("capacity", "table_number")
-        .first()
+    booked = Reservation.objects.filter(
+        date=date,
+        time=time,
+        status=Reservation.STATUS_CONFIRMED,
     )
+    if exclude_reservation:
+        booked = booked.exclude(pk=exclude_reservation.pk)
+
+    return Table.objects.filter(capacity__gte=guests).exclude(
+        pk__in=booked.values("table_id")
+    ).order_by("capacity", "table_number").first()
 
 
 @login_required
 def book_table(request):
-    client = Client.objects.filter(user=request.user).first()
-
-    if not client:
-        messages.error(request, "Please complete signup before booking.")
-        return redirect("signup")
+    client = get_client_for_user(request.user)
 
     if request.method == "POST":
         form = ReservationForm(request.POST)
@@ -99,14 +111,11 @@ def book_table(request):
 
 @login_required
 def my_reservations(request):
-    client = Client.objects.filter(user=request.user).first()
-    reservations = Reservation.objects.none()
-
-    if client:
-        reservations = Reservation.objects.filter(client=client).order_by(
-            "-date",
-            "-time",
-        )
+    client = get_client_for_user(request.user)
+    reservations = Reservation.objects.filter(client=client).order_by(
+        "-date",
+        "-time",
+    )
 
     return render(
         request,
@@ -117,11 +126,11 @@ def my_reservations(request):
 
 @login_required
 def cancel_reservation(request, reservation_id):
-    reservation = get_object_or_404(Reservation, id=reservation_id)
-
-    if reservation.client.user != request.user:
-        messages.error(request, "You are not allowed to cancel this booking.")
-        return redirect("my_reservations")
+    reservation = get_object_or_404(
+        Reservation,
+        id=reservation_id,
+        client__user=request.user,
+    )
 
     if request.method == "POST":
         reservation.status = Reservation.STATUS_CANCELLED
@@ -133,11 +142,11 @@ def cancel_reservation(request, reservation_id):
 
 @login_required
 def edit_reservation(request, reservation_id):
-    reservation = get_object_or_404(Reservation, id=reservation_id)
-
-    if reservation.client.user != request.user:
-        messages.error(request, "Not allowed.")
-        return redirect("my_reservations")
+    reservation = get_object_or_404(
+        Reservation,
+        id=reservation_id,
+        client__user=request.user,
+    )
 
     if reservation.status == Reservation.STATUS_CANCELLED:
         messages.error(request, "You cannot edit a cancelled reservation.")
@@ -151,7 +160,12 @@ def edit_reservation(request, reservation_id):
             time = form.cleaned_data["time"]
             guests = form.cleaned_data["guests"]
 
-            table = find_available_table(date, time, guests)
+            table = find_available_table(
+                date,
+                time,
+                guests,
+                exclude_reservation=reservation,
+            )
 
             if not table:
                 form.add_error(None, "No tables available.")
@@ -171,11 +185,11 @@ def edit_reservation(request, reservation_id):
 
 @login_required
 def delete_reservation(request, reservation_id):
-    reservation = get_object_or_404(Reservation, id=reservation_id)
-
-    if reservation.client.user != request.user:
-        messages.error(request, "You are not allowed to delete this reservation.")
-        return redirect("my_reservations")
+    reservation = get_object_or_404(
+        Reservation,
+        id=reservation_id,
+        client__user=request.user,
+    )
 
     if request.method == "POST":
         reservation.delete()

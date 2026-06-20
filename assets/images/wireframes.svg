@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">Initial wireframes for the restaurant booking application</title>
+  <desc id="desc">Desktop home and reservations layouts alongside a mobile booking form.</desc>
+  <rect width="1200" height="650" fill="#f4f1e8"/>
+  <g font-family="Arial, sans-serif" fill="#252525" stroke="#555" stroke-width="2">
+    <text x="40" y="40" stroke="none" font-size="22" font-weight="bold">Desktop: home</text>
+    <rect x="40" y="60" width="520" height="250" rx="8" fill="#fff"/>
+    <rect x="40" y="60" width="520" height="42" fill="#ddd"/>
+    <text x="55" y="87" stroke="none" font-size="14">LOGO</text>
+    <text x="400" y="87" stroke="none" font-size="12">HOME  BOOK  ACCOUNT</text>
+    <rect x="95" y="128" width="410" height="135" rx="8" fill="#eee"/>
+    <line x1="175" y1="158" x2="425" y2="158"/>
+    <line x1="145" y1="181" x2="455" y2="181"/>
+    <rect x="180" y="207" width="105" height="30" rx="5" fill="#ccc"/>
+    <rect x="300" y="207" width="105" height="30" rx="5" fill="#fff"/>
+    <text x="40" y="355" stroke="none" font-size="22" font-weight="bold">Desktop: reservations</text>
+    <rect x="40" y="375" width="760" height="235" rx="8" fill="#fff"/>
+    <rect x="40" y="375" width="760" height="42" fill="#ddd"/>
+    <line x1="75" y1="452" x2="280" y2="452"/>
+    <rect x="75" y="474" width="210" height="105" rx="8" fill="#eee"/>
+    <rect x="305" y="474" width="210" height="105" rx="8" fill="#eee"/>
+    <rect x="535" y="474" width="210" height="105" rx="8" fill="#eee"/>
+    <text x="865" y="40" stroke="none" font-size="22" font-weight="bold">Mobile: booking</text>
+    <rect x="865" y="60" width="285" height="550" rx="24" fill="#fff"/>
+    <rect x="865" y="60" width="285" height="55" rx="24" fill="#ddd"/>
+    <text x="890" y="94" stroke="none" font-size="14">LOGO</text>
+    <line x1="890" y1="155" x2="1080" y2="155"/>
+    <line x1="890" y1="178" x2="1120" y2="178"/>
+    <text x="890" y="220" stroke="none" font-size="12">DATE</text>
+    <rect x="890" y="230" width="235" height="42" rx="5" fill="#eee"/>
+    <text x="890" y="304" stroke="none" font-size="12">TIME</text>
+    <rect x="890" y="314" width="235" height="42" rx="5" fill="#eee"/>
+    <text x="890" y="388" stroke="none" font-size="12">GUESTS</text>
+    <rect x="890" y="398" width="235" height="42" rx="5" fill="#eee"/>
+    <rect x="890" y="480" width="235" height="48" rx="6" fill="#bbb"/>
+    <text x="954" y="510" stroke="none" font-size="14" font-weight="bold">CONFIRM BOOKING</text>
+  </g>
+</svg>
